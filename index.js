@@ -76,14 +76,24 @@ function initAnimation(currentConfig) {
         particles.forEach(p => {
             p.x += p.xs;
             p.y += p.ys;
-
-            if (p.x > w || p.y > h) {
-                p.x = Math.random() * w;
+    
+            // Si les particules sortent par la droite ou le bas de l'écran
+            if (p.x > w) {
+                p.x = Math.random() * w;  // réapparaître à un endroit aléatoire en haut
                 p.y = -20;
+            } else if (p.y > h) {
+                p.x = Math.random() * w;
+                p.y = -20;  // réapparaître au sommet de l'écran si elles tombent en bas
+            }
+    
+            // Si la vitesse est négative et que les particules montent en haut de l'écran
+            if (p.y < 0) {
+                p.x = Math.random() * w;
+                p.y = h + 20;  // réapparaître en bas lorsqu'elles montent en haut
             }
         });
     }
-
+    
     function animate() {
         draw();
         animationId = requestAnimationFrame(animate);
