@@ -2,9 +2,9 @@ const defaultConfig = {
     density: 100,
     length: 5,
     size: 2,
-    wind_speed: 0,
+    wind_speed: 10,
     dance: 0.1,
-    speed: 2,
+    speed: -2,
     color: '#00aaff'
 };
 
@@ -77,22 +77,21 @@ function initAnimation(currentConfig) {
             p.x += p.xs;
             p.y += p.ys;
     
-            // Si les particules sortent par la droite ou le bas de l'écran
+            // Si la particule sort de l'écran par la droite ou la gauche
             if (p.x > w) {
-                p.x = Math.random() * w;  // réapparaître à un endroit aléatoire en haut
-                p.y = -20;
-            } else if (p.y > h) {
-                p.x = Math.random() * w;
-                p.y = -20;  // réapparaître au sommet de l'écran si elles tombent en bas
+                p.x = 0; // réapparaître à gauche si elle dépasse à droite
+            } else if (p.x < 0) {
+                p.x = w; // réapparaître à droite si elle dépasse à gauche
             }
     
-            // Si la vitesse est négative et que les particules montent en haut de l'écran
-            if (p.y < 0) {
-                p.x = Math.random() * w;
-                p.y = h + 20;  // réapparaître en bas lorsqu'elles montent en haut
+            // Si la particule sort de l'écran par le bas ou le haut
+            if (p.y > h) {
+                p.y = 0; // réapparaître en haut si elle dépasse en bas
+            } else if (p.y < 0) {
+                p.y = h; // réapparaître en bas si elle dépasse en haut
             }
         });
-    }
+    }    
     
     function animate() {
         draw();
