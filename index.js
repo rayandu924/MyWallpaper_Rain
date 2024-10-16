@@ -11,12 +11,25 @@ const defaultConfig = {
 let config = { ...defaultConfig };
 let animationId;
 
+function parseConfigValues(config) {
+    return {
+        density: parseFloat(config.density),
+        length: parseFloat(config.length),
+        size: parseFloat(config.size),
+        wind_speed: parseFloat(config.wind_speed),
+        dance: parseFloat(config.dance),
+        speed: parseFloat(config.speed),
+        color: config.color // Color remains a string
+    };
+}
+
 function initAnimation(currentConfig) {
     if (animationId) {
         cancelAnimationFrame(animationId);
     }
 
-    config = { ...defaultConfig, ...currentConfig };
+    // Parse les valeurs numériques avant de les utiliser
+    config = parseConfigValues({ ...defaultConfig, ...currentConfig });
 
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
